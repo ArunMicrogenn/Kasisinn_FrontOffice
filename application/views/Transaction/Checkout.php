@@ -41,14 +41,14 @@
 	 $grandtotal=($row2['billamount']+ $row2['Tempbillamount']) - ($row2['advance']+$row2['TempDiscamt']+$row2['discamt']+$row2['Allowance'] );
   } 
   
-  $Update="Update Trans_Credit_Entry set groupno='',splitbillno='' where grcid='".$grcid."' ";
-  $resup=$this->db->query($Update);
-  $Update1="Update Temp_Trans_Credit_Entry set groupno='',splitbillno='' where grcid='".$grcid."' ";
-  $resup=$this->db->query($Update1);
-  $Update2="update Trans_Roomdet_det set splitbill=0 where grcid='".$grcid."' ";
-  $resup=$this->db->query($Update2);
-  $Update3="update Trans_receipt_mas set groupno='',splitbillno=0 where grcid='".$grcid."' ";
-  $resup=$this->db->query($Update3);
+//   $Update="Update Trans_Credit_Entry set groupno='',splitbillno='' where grcid='".$grcid."' ";
+//   $resup=$this->db->query($Update);
+//   $Update1="Update Temp_Trans_Credit_Entry set groupno='',splitbillno='' where grcid='".$grcid."' ";
+//   $resup=$this->db->query($Update1);
+//   $Update2="update Trans_Roomdet_det set splitbill=0 where grcid='".$grcid."' ";
+//   $resup=$this->db->query($Update2);
+//   $Update3="update Trans_receipt_mas set groupno='',splitbillno=0 where grcid='".$grcid."' ";
+//   $resup=$this->db->query($Update3);
 
  ?>
 
@@ -319,92 +319,62 @@ btn1.onclick = function() {
   modal1.style.display = "block";
 }
 $("#chkbtn").on('click', function (e) {
-    let text1 = "";
-    let id = 0;
-    let chkbtn = document.getElementById("chkbtn");
-    let loaderimg = document.getElementById("loaderimg");
-
-    chkbtn.disabled = true;
-    loaderimg.style.display = "inline";
-    e.preventDefault();
-
-    $.ajax({
-        type: 'get',
-        url: "<?php echo scs_index ?>Transaction/checkoutsave?Roomid=<?php echo $Roomid; ?>",
-        data: $('#checkoutsave').serialize(),
-        success: function (result) {
-            id = result;
-
-            if (grandtotal < 0) {
-                text1 = "Do you want to post it to another room?";
-            } else {
-                text1 = "Do you want to print out?";
-            }
-
-            Swal.fire({
-                title: "Checkout Saved Successfully!..",
-                html: `
-                    <p>${text1}</p>
-                    <select id="printOption" class="swal2-input">
-                        <option value="" disabled selected>Select Print Type</option>
-                        <option value="summary">Summary Bill</option>
-                        <option value="print">Checkout Bill</option>
-                    </select>
-                `,
-                icon: "success",
-                showCancelButton: true,
-                confirmButtonText: "Proceed",
-                cancelButtonText: "Cancel",
-                preConfirm: () => {
-                    const selectedOption = document.getElementById('printOption').value;
-                    if (!selectedOption) {
-                        Swal.showValidationMessage('Please select a print option');
-                        return false;
-                    }
-                    return selectedOption;
-                }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const selectedOption = result.value;
-                    if (selectedOption === "print") {
-                        window.location.href = "<?php echo scs_index ?>Transaction/CheckoutReceipt?Checkoutid=" + id;
-                    } else if (selectedOption === "summary") {
-                        window.location.href = "<?php echo scs_index ?>Reprint/CheckoutSummaryReprint?Checkoutid=" + id;
-                    }
-                } else {
-                    if (grandtotal < 0) {
-                        $.ajax({
-                            type: "POST",
-                            url: "<?php echo scs_index ?>Transaction/refundupdate",
-                            data: "id=" + id,
-                            success: function (result) {
-                                if (result == "success") {
-                                    window.location.href = "<?php echo scs_index ?>Transaction/CheckoutReceipt?Checkoutid=" + id;
-                                }
-                            },
-                            error: function () {
-                                chkbtn.disabled = false;
-                            }
-                        });
-                    } else {
-                        window.location.href = "<?php echo scs_index ?>Transaction/CheckoutReceipt?Checkoutid=" + id;
-                    }
-                }
-            });
-        },
-        error: function () {
-            chkbtn.disabled = false;
-            loaderimg.style.display = "none";
-            Swal.fire("Error", "Checkout process failed. Please try again.", "error");
-        }
+		let text1 ="";
+		let id = 0;
+				document.getElementById("chkbtn").disabled=true;
+		document.getElementById("loaderimg").style.display="inline";
+       e.preventDefault();
+          $.ajax({
+            type: 'get',
+            url: "<?php echo scs_index ?>Transaction/checkoutsave?Roomid=<?php echo $Roomid; ?>",
+            data: $('#checkoutsave').serialize(),
+            success: function (result) {
+				 id=result;
+				if(grandtotal < 0){
+					 text1 = "Do youwant to post it another room";
+				}else{
+					text1 = "Do you want print out?..";
+				}					
+				
+				 swal({ 
+				  title: "Checkout Saved Succesfully!..",
+				  text: text1,
+				  icon: "success",
+				  buttons: true,
+				  dangerMode: true,
+				})
+				.then((willDelete) => {
+				  if (willDelete) {
+					window.location.href ="<?php echo scs_index ?>Transaction/CheckoutReceipt?Checkoutid="+id;
+			    }
+				 else {
+					if(grandtotal < 0){
+						$.ajax({
+							type:"POST",
+							url: "<?php echo scs_index ?>Transaction/refundupdate",
+							data: "id="+id,
+							success:function (result){
+								if(result == "success"){	
+							      window.location.href ="<?php echo scs_index ?>Transaction/CheckoutReceipt?Checkoutid="+id;
+								}
+							}
+						})
+					}
+					else
+					{
+				    window.location.href ="<?php echo scs_index ?>Transaction/CheckoutReceipt?Checkoutid="+id;
+				    }
+					
+				  }
+				}); 
+			}			
+          });
+          		   
     });
-});
-
-
 	$("#BillSplitForm").on('submit', function (e) {
        e.preventDefault();
         $.ajax({
-    	    type: 'get',
+    	    type: 'POST',
             url: "<?php echo scs_index ?>Transaction/tempBillSplitform?Roomid=<?php echo $Roomid; ?>",
             data: $('#BillSplitForm').serialize(),
             success: function (result) {

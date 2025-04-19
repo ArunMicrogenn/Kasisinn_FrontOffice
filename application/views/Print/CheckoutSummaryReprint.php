@@ -15,9 +15,9 @@ $Res=$this->Myclass->Hotel_Details();
 		$Company=$row['Company'];
 		$Address=$row['Address'];
 		$Address1=$row['Address1'];
-		 $City='Bengaluru';
-		$Pin=$row['PinCode']; 
-		 $State='Karnataka';
+		$City=$row['City'];
+		$Pin=$row['PinCode'];
+		$State=$row['State'];
 		$Gstinn=$row['Gstinn'];
 		$Phone=$row['Phone'];
 		if($row['Email']=='')
@@ -87,17 +87,13 @@ $Res=$this->Myclass->Hotel_Details();
 					 <th colspan="2" style="width:80%" ><h2><?php echo $Company; ?></h2></th>									
 					</tr>
 					<tr>
-					 <th colspan="2" style="width:80%" ><?php echo " #570, 15th A Cross, Dollars colony"; ?></th>
-					</tr> 
-					<tr>
-					 <th colspan="2" style="width:80%" ><?php echo " RMV II stage, Off new BEL road"; ?></th>
-					</tr> 
-					
+					<th colspan="2" style="width:80%" ><?php echo $Address." ".$Address1; ?></th>
+					</tr> 				
 					<tr>
 					 <th colspan="2" style="width:80%"><?php echo $City."-".$Pin.". ".$State; ?></th>
 					</tr>
 					<tr>
-					 <th colspan="2" style="width:80%"> <?php echo $Phone."" .$Email;; ?></th>
+					 <th colspan="2" style="width:80%"> <?php echo $Phone."," .$Email;; ?></th>
 					</tr>
 				</thead>
 		</table>
@@ -122,7 +118,7 @@ $Res=$this->Myclass->Hotel_Details();
 				  <tr>
     				<td style="width:40%"><?php echo $city; ?></td>
     				<td style="border-left:1px solid #000;border-right:1px solid #000;border-bottom:1px solid #000;width:30%"><b>&nbsp;Dep.Date :</b>&nbsp;<?php echo date('d-m-Y',strtotime($Checkoutdate))."-".substr($Checkouttime,10,6); ?></td>
-					<td style="border-bottom:1px solid #000;width:30%"><b>&nbsp;Days &nbsp;&nbsp;&nbsp;&nbsp; :</b>&nbsp;<?php echo number_format($noofdayss); ?></td>
+					<td style="border-bottom:1px solid #000;width:30%"><b>&nbsp;Days &nbsp;&nbsp;&nbsp;&nbsp; :</b>&nbsp;<?php echo number_format($noofdays); ?></td>
     			  </tr>
 				  <tr>
     				<td style="width:40%"><b><?php echo "Mobile No : ".$Mobile; ?></b></td>
@@ -368,7 +364,7 @@ $Res=$this->Myclass->Hotel_Details();
 						  <td style="width:20%;text-align:right;"><b>NET AMOUNT</b></td>
 						  <td style="width:10%;text-align:right;"></td>
 						  <td style="width:10%;text-align:right;"></td>
-						  <td style="width:10%;text-align:right;"><b><?php echo number_format($TotalAmount,2); ?></b></td>						 
+						  <td style="width:10%;text-align:right;"><b><?php echo number_format($TotalAmount + $Roundoff,2); ?></b></td>						 
 						  <!-- <td colspan="2" style="width:20%;text-align:right;"><b>By <?php echo $PayMode; ?></b></td>						   -->
 						</tr>
 						<tr>

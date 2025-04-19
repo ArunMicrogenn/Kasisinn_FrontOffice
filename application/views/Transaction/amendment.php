@@ -40,7 +40,7 @@ body {font-family: Arial;}
 }
 </style>
 <?php
- $sql=" Select * from Mas_Room Rm
+ $sql=" Select det.Noofpersons as persons,* from Mas_Room Rm
  Inner join room_status rs on Rm.Room_Id=rs.Roomid
  inner join Trans_roomdet_det det on det.grcid=rs.grcid
  Inner join trans_roomcustomer_Det rd on rd.grcid=rs.grcid
@@ -59,7 +59,7 @@ body {font-family: Arial;}
 	 $Firstname=$row['Firstname']; $Middlename=$row['Middlename'];
 	 $Title=$row['Title']; $Lastname=$row['Lastname']; $email=$row['Email_ID']; $gphone=$row['Phone'];
 	 $grcid=$row['grcid']; $roomgrcid=$row['roomgrcid'];  $City=$row['City']; $Nationality=$row['Nationality'];
-	  $Mobile=$row['Mobile']; $Noofpersons=$row['Noofpersons'];
+	  $Mobile=$row['Mobile']; $Noofpersons=$row['persons'];
 	  $Address1=$row['HomeAddress1']; $Address2=$row['HomeAddress2']; $Address3=$row['HomeAddress3'];
 	  $workaddress1=$row['WorkAddress1']; $workaddress2=$row['WorkAddress2']; $workaddress3=$row['WorkAddress3'];
 	  $discper=$row['discper']; $discAmount=$row['discamount'];$PlanType_Id = $row['PlanType_Id'];
@@ -67,11 +67,11 @@ body {font-family: Arial;}
 	  $roomrent=$row['roomrent'];
 	  $customer_id = $row['Customer_Id'];
  }
-
+ 
  $rent1="select * from Trans_Roomdet_det_rent Where  grcid='".$grcid."' and Rentdate=(select DateofAudit from Night_Audit)";
  $rentres1=$this->db->query($rent1);
  foreach ($rentres1->result_array() as $rentrow1)
- {
+ { 
 	if ($Noofpersons ==1){
 		$Actrackrate= $rentrow1['singlerent'];	
 	}else if($Noofpersons==2){
@@ -436,7 +436,7 @@ body {font-family: Arial;}
 	     <tr>
 		<td></td><td></td>
 		<td></td><td></td>
-		<td></td><td><input type="button" value="Save" class="btn btn-warning btn-sm"></td>
+		<td></td><td><input type="button" onclick="Guestamendment();" value="Save" class="btn btn-warning btn-sm"></td>
 	   </tr>
 	 </table>
 </div>
@@ -634,46 +634,23 @@ function cityselect()
 
 
 	///Room rent Edit Form Submit ////
-//$("#tariffsubmit").on('submit', function (e) {
-		//e.preventDefault();
-		//$.ajax({
-		//type: 'get',
-		//url: "<?php echo scs_index ?>Transaction/tarriffupdate?grcid=<?php echo $grcid; ?>&Numberofpax=<?php echo $Noofpersons; ?>",
-		//data: $('#tariffsubmit').serialize(),
-	//	success: function (result) {
-			//alert(result);	
-		//	var modal1 = document.getElementById("tariff");
-		//	modal1.style.display = "none";
-			//}
+$("#tariffsubmit").on('submit', function (e) {
+		e.preventDefault();
+		$.ajax({
+		type: 'get',
+		url: "<?php echo scs_index ?>Transaction/tarriffupdate?grcid=<?php echo $grcid; ?>&Numberofpax=<?php echo $Noofpersons; ?>",
+		data: $('#tariffsubmit').serialize(),
+		success: function (result) {
+			alert(result);	
+			var modal1 = document.getElementById("tariff");
+			modal1.style.display = "none";
+			}
 		
-	//	});
-	//	setTimeout(ShowDynamicRent, 2000);
+		});
+		setTimeout(ShowDynamicRent, 2000);
 		//ShowDynamicRent();
 		//guestmoredetails.style.display = "none";
-	//});
-	$("#tariffsubmit").on('submit', function (e) {
-    e.preventDefault();
-    
-    // Serialize the form data
-    var formData = $('#tariffsubmit').serialize();
-
-    $.ajax({
-        type: 'POST', // Use POST instead of GET
-        url: "<?php echo scs_index ?>Transaction/tarriffupdate?grcid=<?php echo $grcid; ?>&Numberofpax=<?php echo $Noofpersons; ?>",
-        data: formData, // Send serialized form data
-        success: function (result) {
-            alert(result);	
-            var modal1 = document.getElementById("tariff");
-            modal1.style.display = "none";
-        },
-        error: function (xhr, status, error) {
-            console.error("Error occurred: " + status + " " + error);
-        }
-    });
-
-    setTimeout(ShowDynamicRent, 2000);
-});
-
+	});
 function selectedcity(a,b)
 {
   var cityid=a;

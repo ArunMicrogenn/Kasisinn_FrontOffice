@@ -17,7 +17,7 @@ $Res=$this->Myclass->Hotel_Details();
 		$Address1=$row['Address1'];
 		$City='Thiruvarur';
 		$Pin=$row['PinCode']; 
-		$State='Tamil Nadu';
+		$State=$row['State'];
 		$Gstinn=$row['Gstinn'];
 		$Phone=$row['Phone'];
 		if($row['Email']=='')
@@ -91,14 +91,11 @@ foreach ($exe->result_array() as $row1)
         <table style="border-right:1px solid #000;border-top:1px solid #000;border-left:1px solid #000;border-bottom:1px solid #000;width:100%">
 		<thead>
 					<tr>
-					 <th rowspan="5"  style="width:20%"><img style="width:100%;" src="<?php echo scs_url ?>upload/logo.jpeg"/></th>
+					 <th rowspan="5"  style="width:20%"><img style="width:100%;" src="<?php echo scs_url ?>upload/logo.png"/></th>
 					 <th colspan="2" style="width:80%" ><h2><?php echo $Company; ?></h2></th>									
-					</tr>
+					</tr>				
 					<tr>
-					 <th colspan="2" style="width:80%" ><?php echo $Address; ?></th>
-					</tr> 
-					<tr>
-					 <th colspan="2" style="width:80%" ><?php echo $Address1; ?></th>
+					<th colspan="2" style="width:80%" ><?php echo $Address." ".$Address1; ?></th>
 					</tr> 					
 					<tr>
 					 <th colspan="2" style="width:80%"><?php echo $City."-".$Pin.". ".$State; ?></th>

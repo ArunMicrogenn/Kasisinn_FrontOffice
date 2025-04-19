@@ -701,11 +701,11 @@ function __construct() {
 		for($i = $begin; $i <= $end; $i->modify('+1 day'))
 		{   $daytotal=0;
 			$dates = $i->format("Y-m-d");
-			$sql6="select * from Mas_Revenue rev
+			$sql6="select CreditNo,Credid,CreditDate,tce.grcid,Ord from Mas_Revenue rev
 			Inner join Trans_credit_entry tce on tce.Creditheadid =rev.Revenue_Id
 			Where tce.grcid='".$_REQUEST['grcid']."' and CreditDate='".$dates."'
 			Union
-			select * from Mas_Revenue rev
+			select CreditNo,Credid,CreditDate,ttce.grcid,Ord from Mas_Revenue rev
 			Inner Join Temp_Trans_credit_entry ttce on ttce.Creditheadid =rev.Revenue_Id
 			Where ttce.grcid='".$_REQUEST['grcid']."' and CreditDate='".$dates."'
 			Order by Ord,CreditDate,Credid"; $CreditNo= ''; 
@@ -1339,7 +1339,7 @@ function __construct() {
 		echo "END CATCH ";
 		$sqc = ob_get_clean();
 		$ran=rand().rand().rand(); 
-		echo $sq = "Create Procedure #".$ran." as ".$sqc.""; 
+		$sq = "Create Procedure #".$ran." as ".$sqc.""; 
 		$result = $this->db->query($sq);
 		$result = $this->db->query("exec #".$ran);
 		$this->db->close();
@@ -1758,7 +1758,7 @@ function __construct() {
 	}
 	public function checkoutsave()
 	{	
-		 $sql="exec Exec_Checkout_Save '".$_REQUEST['Room_id']."','".date("Y-m-d")."','".User_id."'";
+		echo $sql="exec Exec_Checkout_Save '".$_REQUEST['Room_id']."','".date("Y-m-d")."','".User_id."'";
 		$res=$this->db->query($sql);
 		foreach($res->result() as $row)
 		{ 	echo $row->id;
@@ -1848,24 +1848,18 @@ function __construct() {
 
 
 					$msg = str_replace('*GuestName*', $name, $msg);
-					// Ensure $url is assigned a value
-						if (is_null($url)) {
-							// Optionally set a default value or handle the error
-							$url = ''; // or some default URL
-						}
-
-						// Now you can safely use str_replace
-						$msg = str_replace('*FeedbackURL*', $url, $msg);
+					$msg = str_replace('*FeedbackURL*', $url, $msg);
 
 					$inss = "insert into outbox (MobileNumber,SMSMessage,DateCreated,campaign)
-			     	values('" . $mobile . "','" . $msg . "',convert(VARCHAR,getdate(),20),'".$campaignname."')";
+				values('" . $mobile . "','" . $msg . "',convert(VARCHAR,getdate(),20),'".$campaignname."')";
 					$execins = $this->db->query($inss . $detmsg);
 					$this->db->close();
 					$this->db->reconnect();
 				}
 			 }
 		}
-	
+
+		return true;	
 	}
 	//03-02-2023
 	public function checkoutsave_old()
@@ -2367,7 +2361,7 @@ function __construct() {
 	} 
 	public function tarriffupdate()
 	{
-	  $qry="select * from trans_roomdet_det_rent where grcid=".$_REQUEST['grcid'];
+	 $qry="select * from trans_roomdet_det_rent where grcid=".$_REQUEST['grcid'];
 	 $res=$this->db->query($qry);
 	 foreach($res->result() as $row)
 	 {
@@ -2664,7 +2658,7 @@ function __construct() {
 			// echo $ins;
 			echo "Sucess";
 			if($res7){
-				header("Location:  ".scs_index."/Transaction/RoomStatusOnline");
+				header("Location:  ".scs_index."Transaction/RoomStatusOnline");
 			}
 		
 		}

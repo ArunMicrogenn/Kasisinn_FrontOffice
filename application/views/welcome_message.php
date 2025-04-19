@@ -42,7 +42,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
    </form>
 </div>
 <div class="footer">
-     <p>Copyright &copy; 2025 All Rights Reserved | Developed  By <a href="http://microgenn.com">Microgenn</a> || Version 2.0</p>
+     <p>Copyright &copy; 2022 All Rights Reserved | Design by <a href="http://microgenn.com">Microgenn</a> || Version 1.0</p>
 </div>
 </body>
 </html>

@@ -188,7 +188,7 @@ class pweb {
 		
 		public function sms_footer($Menu)
 		{		
-			 $Menu->Sms_Footer();
+			//  $Menu->Sms_Footer();
 		}
 		
 }

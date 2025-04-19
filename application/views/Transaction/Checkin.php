@@ -377,7 +377,7 @@
 	<table class="FrmTable T-6" style="margin-top:5px">
   <tr>
     <td><strong>In&nbsp;Date</strong></td>
-    <td ><input type="date" name="" id="Indate" style="background-color:white;" value="<?php echo $_POST['Fdat']; ?>"  min="<?php echo date('Y-m-d');?>"  max="<?php echo date('Y-m-d');?>" onChange="outdate();" class="m-ctrl"  style="background-color:#FFF59B;width:100px" disabled ></td>
+    <td ><input type="date" name="" id="Indate" style="background-color:white;" value="<?php echo $_POST['Fdat']; ?>"  min="<?php echo date('Y-m-d');?>"  max="<?php echo date('Y-m-d');?>" onChange="outdate();" class="m-ctrl"  style="background-color:#FFF59B;width:100px"  ></td>
     <td>Hr</td>
     <td><select name="FHr" id="FHr" >
     <option>-</option>
@@ -1122,6 +1122,7 @@ $("#City1").autocomplete({
 				cache: false,
 				processData: false,
 			 success:function(result){
+				//alert(result);
 					$('.ui-dialog-titlebar-close').click();		
 					if(result !=0 && result >0)		
 						{

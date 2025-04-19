@@ -6,15 +6,14 @@ class licscript {
         {
  ?>
     <script>
-         var btnSubscription = document.getElementById("Subscription");
+         var btnSubscription = document.getElementById("Subscription") ?? null;
+        // onclick btnSubscription function to block the page
+        btnSubscription.onclick = function() {
+            SubscriptionPopup.style.display = "block";
+        }    
+
          var SubscriptionPopup = document.getElementById("SubscriptionPopup");
          var SubscriptionPopupClose = document.getElementById("SubscriptionPopupClose");
-
-         btnSubscription.onclick = function() {
-             SubscriptionPopup.style.display = "block";
-
-           //alert("testing");
-            }
             SubscriptionPopupClose.onclick = function() {
              SubscriptionPopup.style.display = "none";
             }

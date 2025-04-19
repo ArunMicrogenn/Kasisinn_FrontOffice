@@ -4,14 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 define('scs_url','http://'.$_SERVER['HTTP_HOST']."/Kasisinn_FrontOffice/");
 define('scs_skin','http://'.$_SERVER['HTTP_HOST']."/Kasisinn_FrontOffice/skin/");
 define('scs_index','http://'.$_SERVER['HTTP_HOST']."/Kasisinn_FrontOffice/index.php/");
-define('spath',$_SERVER['DOCUMENT_ROOT']."/Kasisinn_FrontOffice/");
-
-/*define('scs_url','http://'.$_SERVER['HTTP_HOST']."/lalithamahal_frontoffice/");
-define('scs_skin','http://'.$_SERVER['HTTP_HOST']."/lalithamahal_frontoffice/skin/");
-define('scs_index','http://'.$_SERVER['HTTP_HOST']."/lalithamahal_frontoffice/index.php/");
-define('spath',$_SERVER['DOCUMENT_ROOT']."/lalithamahal_frontoffice/");*/
  
-
+define('spath',$_SERVER['DOCUMENT_ROOT']."/Kasisinn_FrontOffice/");
 
 /*
 |--------------------------------------------------------------------------
@@ -35,8 +29,7 @@ define('spath',$_SERVER['DOCUMENT_ROOT']."/lalithamahal_frontoffice/");*/
 | a PHP script and you can easily do that on your own.
 |
 */
-/*$config['base_url'] = '';*/
-$config['base_url'] = 'http://localhost:8085/Kasisinn_FrontOffice/';
+$config['base_url'] = 'http://stay_zone.hotelierhms.com/';
 
 /*
 |--------------------------------------------------------------------------
